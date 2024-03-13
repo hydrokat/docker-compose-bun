@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: bun.dockerfile
+    volumes:
+      - './app-src:/usr/app'
+    working_dir: /usr/app
+    entrypoint: ['bun', 'run', 'dev']
+    ports:
+      - "8080:3000"
+    networks:
+      - hono_network
+  
+  bun:
+    build:
+      context: .
+      dockerfile: bun.dockerfile
+    volumes:
+      - './app-src:/usr/app'
+    working_dir: /usr/app
+    entrypoint: ['bun']
+    networks:
+      - hono_network
+
+  bunx:
+    build:
+      context: .
+      dockerfile: bun.dockerfile
+    volumes:
+      - './app-src:/usr/app'
+    working_dir: /usr/app
+    entrypoint: ['bunx']
+    networks:
+      - hono_network
+
+networks:
+  hono_network:
+    driver: bridge
